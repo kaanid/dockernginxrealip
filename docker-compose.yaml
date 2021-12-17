@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  nginx:
+    image: nginx:1.19.2-alpine
+    hostname: nginx
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    ports:
+      - "9000:9000"
+
+  aspnet:
+    build:
+      dockerfile: WebApplicationNginxRealIP/Dockerfile
+      context: .
+    hostname: aspnet
+    expose:
+      - "80"
+    ports:
+      - "9002:80"
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
